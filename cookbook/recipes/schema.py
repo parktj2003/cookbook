@@ -1,46 +1,33 @@
-import graphene
+from cookbook.recipes.models import Recipe, RecipeIngredient
+from graphene import Node
+from graphene_django.filter import DjangoFilterConnectionField
 from graphene_django.types import DjangoObjectType
 
-from .models import Recipe, RecipeIngredient
 
-
-class RecipeType(DjangoObjectType):
+class RecipeNode(DjangoObjectType):
     class Meta:
         model = Recipe
+        interfaces = (Node,)
         fields = "__all__"
+        filter_fields = ["title", "amounts"]
 
 
-class RecipeIngredientType(DjangoObjectType):
+class RecipeIngredientNode(DjangoObjectType):
     class Meta:
         model = RecipeIngredient
+        # Allow for some more advanced filtering here
+        interfaces = (Node,)
         fields = "__all__"
+        filter_fields = {
+            "ingredient__name": ["exact", "icontains", "istartswith"],
+            "recipe": ["exact"],
+            "recipe__title": ["icontains"],
+        }
 
 
 class Query:
-    recipe = graphene.Field(RecipeType, id=graphene.Int(), title=graphene.String())
-    all_recipes = graphene.List(RecipeType)
+    recipe = Node.Field(RecipeNode)
+    all_recipes = DjangoFilterConnectionField(RecipeNode)
 
-    recipeingredient = graphene.Field(RecipeIngredientType, id=graphene.Int())
-    all_recipeingredients = graphene.List(RecipeIngredientType)
-
-    def resolve_recipe(self, context, id=None, title=None):
-        if id is not None:
-            return Recipe.objects.get(pk=id)
-
-        if title is not None:
-            return Recipe.objects.get(title=title)
-
-        return None
-
-    def resolve_recipeingredient(self, context, id=None):
-        if id is not None:
-            return RecipeIngredient.objects.get(pk=id)
-
-        return None
-
-    def resolve_all_recipes(self, context):
-        return Recipe.objects.all()
-
-    def resolve_all_recipeingredients(self, context):
-        related = ["recipe", "ingredient"]
-        return RecipeIngredient.objects.select_related(*related).all()
+    recipeingredient = Node.Field(RecipeIngredientNode)
+    all_recipeingredients = DjangoFilterConnectionField(RecipeIngredientNode)

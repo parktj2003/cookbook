@@ -1,4 +1,4 @@
-Cookbook Example Django Project
+Cookbook Example (Relay) Django Project
 ===============================
 
 This example project demos integration between Graphene and Django.
@@ -14,7 +14,7 @@ whole Graphene repository:
 ```bash
 # Get the example project code
 git clone https://github.com/graphql-python/graphene-django.git
-cd graphene-django/examples/cookbook-plain
+cd graphene-django/examples/cookbook
 ```
 
 It is good idea (but not required) to create a virtual environment
@@ -60,14 +60,5 @@ Now you should be ready to start the server:
 Now head on over to
 [http://127.0.0.1:8000/graphql](http://127.0.0.1:8000/graphql)
 and run some queries!
-(See the [Graphene-Django Tutorial](http://docs.graphene-python.org/projects/django/en/latest/tutorial-plain/#testing-our-graphql-schema)
+(See the [Graphene-Django Tutorial](http://docs.graphene-python.org/projects/django/en/latest/tutorial-relay/#testing-our-graphql-schema)
 for some example queries)
-
-Testing local graphene-django changes
--------------------------------------
-
-In `requirements.txt`, replace the entire `graphene-django=...` line with the following (so that we install the local version instead of the one from PyPI):
-
-```
-../../  # graphene-django
-```
