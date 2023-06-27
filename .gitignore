@@ -1,0 +1,54 @@
+# client
+*build/
+node_modules/
+coverage
+
+## misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# python + django
+**/__pycache__/
+*.pyc
+.venv/
+db.sqlite3
+
+# coverage
+.coverage
+.coverage.*
+htmlcov/
+
+# misc
+.vscode/
+.env
+
+# storybook
+zuzu/client/storybook-static
+
+# django-sass
+zuzu/packages/document/templates/includes/styles/css
+zuzu/packages/document/templates/includes/styles/scss/**/*.css
+
+# Google API
+credentials.json
+
+# Celery
+celerybeat.pid
+celerybeat-schedule
+celerybeat-schedule.*
+/.celery/
+
+# document tests
+diff_img.png
+.temp/*.*
+!.temp/.gitkeep
+
+# Homebrew
+Brewfile.lock.json
+
